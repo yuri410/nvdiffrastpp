@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="common\cudaraster\impl\BinRaster.inl" />
+    <None Include="common\cudaraster\impl\CoarseRaster.inl" />
+    <None Include="common\cudaraster\impl\FineRaster.inl" />
+    <None Include="common\cudaraster\impl\TriangleSetup.inl" />
+    <None Include="common\cudaraster\impl\Util.inl" />
+    <None Include="torch\torch_common.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="common\common.cpp" />
+    <ClCompile Include="common\cudaraster\impl\Buffer.cpp" />
+    <ClCompile Include="common\cudaraster\impl\CudaRaster.cpp" />
+    <ClCompile Include="common\cudaraster\impl\RasterImpl.cpp" />
+    <ClCompile Include="common\glutil.cpp" />
+    <ClCompile Include="common\rasterize_gl.cpp" />
+    <ClCompile Include="common\texture.cpp" />
+    <ClCompile Include="torch\ops.cpp" />
+    <ClCompile Include="torch\torch_antialias.cpp" />
+    <ClCompile Include="torch\torch_bindings.h" />
+    <ClCompile Include="torch\torch_bindings_gl.h" />
+    <ClCompile Include="torch\torch_interpolate.cpp" />
+    <ClCompile Include="torch\torch_rasterize.cpp" />
+    <ClCompile Include="torch\torch_rasterize_gl.cpp" />
+    <ClCompile Include="torch\torch_texture.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common\antialias.h" />
+    <ClInclude Include="common\common.h" />
+    <ClInclude Include="common\cudaraster\CudaRaster.hpp" />
+    <ClInclude Include="common\cudaraster\impl\Buffer.hpp" />
+    <ClInclude Include="common\cudaraster\impl\Constants.hpp" />
+    <ClInclude Include="common\cudaraster\impl\Defs.hpp" />
+    <ClInclude Include="common\cudaraster\impl\PrivateDefs.hpp" />
+    <ClInclude Include="common\cudaraster\impl\RasterImpl.hpp" />
+    <ClInclude Include="common\framework.h" />
+    <ClInclude Include="common\glutil.h" />
+    <ClInclude Include="common\glutil_extlist.h" />
+    <ClInclude Include="common\interpolate.h" />
+    <ClInclude Include="common\rasterize.h" />
+    <ClInclude Include="common\rasterize_gl.h" />
+    <ClInclude Include="common\texture.h" />
+    <ClInclude Include="torch\ops.h" />
+    <ClInclude Include="torch\torch_types.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="common\antialias.cu" />
+    <CudaCompile Include="common\cudaraster\impl\RasterImpl.cu" />
+    <CudaCompile Include="common\interpolate.cu" />
+    <CudaCompile Include="common\rasterize.cu" />
+    <CudaCompile Include="common\texture.cu" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A02C4B36-3935-484E-805C-62A139D86721}</ProjectGuid>
+    <RootNamespace>nvdiffrastpp</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 11.6.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(TORCH_DEBUG_INCLUDE);$(IncludePath)</IncludePath>
+    <LibraryPath>$(TORCH_DEBUG_LIB);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(TORCH_INCLUDE);$(IncludePath)</IncludePath>
+    <LibraryPath>$(TORCH_LIB);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>cudart_static.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <CudaCompile>
+      <TargetMachinePlatform>64</TargetMachinePlatform>
+    </CudaCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>cudart_static.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <CudaCompile>
+      <TargetMachinePlatform>64</TargetMachinePlatform>
+    </CudaCompile>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 11.6.targets" />
+  </ImportGroup>
+</Project>

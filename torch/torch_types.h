@@ -7,7 +7,10 @@
 // distribution of this software and related documentation without an express
 // license agreement from NVIDIA CORPORATION is strictly prohibited.
 
-#include "torch_common.inl"
+//#include "torch_common.inl"
+#pragma warning(push, 0)
+#include <torch/all.h>
+#pragma warning(pop)
 
 //------------------------------------------------------------------------
 // Python GL state wrapper.
